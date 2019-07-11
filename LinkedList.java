@@ -1,3 +1,5 @@
+//Akanshu Singh
+
 /**
  * This generic collection class uses a singly-linked data 
  * structure to store store elements. Many operations are
@@ -61,6 +63,7 @@ public class LinkedList<E extends Comparable<E>> {
 
   // Find out how many elements are in the list O(1)
   public int size() {
+	  
     return n;
   }
 
@@ -108,8 +111,11 @@ public class LinkedList<E extends Comparable<E>> {
   }
 
   private E get(Node ref, int startIndex, int stopIndex) {
-    // TODO: Complete this method using recursion, no loop allowed.
-    return null;
+	  if (startIndex==stopIndex)
+		  return ref.data;
+	  else {
+		 return  get(ref.next,startIndex+1,stopIndex);	  }
+	  
   }
  
   
@@ -118,13 +124,63 @@ public class LinkedList<E extends Comparable<E>> {
   public void removeAll(E el) {
     // This public method requires a call to a private helper method
     // with first as an argument. It must be recursive, no loop allowed.
+	  removeAll(el,first,0);
   }
 
-  // Duplicate el next to each occurrence of el in this list.
+  private void removeAll(E el, Node ref,int i) {
+	if (ref.data.equals(el)&&i==0) {
+		if (n==0)
+		{	System.out.println("Not right");
+			first=null;
+		return ;}
+		else {System.out.println("right"+i);
+			first=ref.next;
+		removeAll(el,ref.next,i+1);}
+		
+	}
+	if (i==n-1||ref.next==null)
+		return ;
+	if (ref.next.data.equals(el)) {
+		System.out.println(ref.data);
+		System.out.println(i);
+		ref.next=ref.next.next;
+		if (ref.next==null)
+			return ;
+		removeAll(el,ref.next,i+1);
+		
+	}
+	else
+		removeAll(el,ref.next,i+1);
+	
+	
+}
+
+// Duplicate el next to each occurrence of el in this list.
   public void duplicateAll(E el) {
     // This public method requires a call to a private helper method
     // with first as an argument. It must be recursive, no loop allowed.
+	  duplicateAll(el,first,0);
   }
+
+private void duplicateAll(E el, Node ref,int i) {
+	if (i==n) {
+		return;
+	}
+	if (ref.data.equals(el)) {
+		Node var=new Node(el,ref.next);
+		ref.next=var;
+		
+		n++;
+		duplicateAll(el,ref.next.next,i+2);
+		
+	}
+	else {
+		i++;
+		duplicateAll(el,ref.next,i);
+		
+	}
+	
+}
 
 
 

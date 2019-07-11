@@ -1,3 +1,6 @@
+//Akanshu Singh
+import java.util.Arrays;
+
 /**
  * ObstacleCourse: A type that represents an obstacle course from which to
  * escape. This does not find the shorted path. Because of this, we must always
@@ -71,12 +74,41 @@ public class ObstacleCourse {
    * col where the exit was found
    */
   private boolean findExit(int row, int col) {
-    // TODO: Complete this method
-    //
-    // Do not forget to set the instance variable foundRow and 
+   
+	  // Do not forget to set the instance variable foundRow and 
     // foundCol in this method when the exit is found.
     //
-    return !false;
+	  boolean exit=false;
+	  if (course[row][col]!='+'&& course[row][col]!=TRIED) {
+		  course[row][col]=TRIED;
+		  if (row==0||row==course.length-1||col==0||col==course[0].length-1) {
+			  foundRow=row;
+			  foundCol=col;
+			  exit=true;
+			  
+		  }
+		  else {
+			  exit=findExit(row+1,col);
+			  if (exit==false) {
+				  exit=findExit(row,col+1);
+				  if (exit==false) {
+					  exit=findExit(row-1,col);
+					  if (exit==false) {
+						  exit=findExit(row,col-1);
+					  }
+				  }
+			  }
+			    
+		  }
+		  if (exit==true)
+			  course[row][col]=PART_OF_PATH;
+		
+	  }
+	  System.out.print(Arrays.deepToString(course));
+	  return(exit);
+	  
+	  
+    
   }
 
 }
